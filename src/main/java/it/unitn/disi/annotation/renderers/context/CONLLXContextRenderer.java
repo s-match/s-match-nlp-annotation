@@ -13,6 +13,10 @@ public class CONLLXContextRenderer extends AbstractTextContextRenderer {
 
     public static final String TRAIN_FILES = "CONLL files (*.conll)";
 
+    protected CONLLXContextRenderer(boolean sort) {
+        super(sort);
+    }
+
     protected String getTrainSample(INLPNode curNode) {
         ILabel label = curNode.getNodeData().getLabel();
         if (null != label) {

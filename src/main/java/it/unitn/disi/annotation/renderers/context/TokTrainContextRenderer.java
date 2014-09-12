@@ -13,6 +13,10 @@ public class TokTrainContextRenderer extends AbstractTextContextRenderer {
 
     private final static String DEFAULT_SEPARATOR_CHARS = "<SPLIT>";
 
+    protected TokTrainContextRenderer(boolean sort) {
+        super(sort);
+    }
+
     protected String getTrainSample(INLPNode curNode) {
         ILabel label = curNode.getNodeData().getLabel();
         if (null != label) {

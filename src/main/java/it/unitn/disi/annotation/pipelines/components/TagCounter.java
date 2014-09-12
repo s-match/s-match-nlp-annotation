@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class TagCounter extends LabelPipelineComponent {
 
-    private final static HashMap<String, Long> tagCounts = new HashMap<String, Long>();
+    private final static HashMap<String, Long> tagCounts = new HashMap<>();
 
     public void process(ILabel instance) {
         for (IToken t : instance.getTokens()) {

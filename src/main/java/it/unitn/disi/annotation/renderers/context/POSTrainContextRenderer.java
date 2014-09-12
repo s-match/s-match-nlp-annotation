@@ -10,6 +10,10 @@ import it.unitn.disi.nlptools.data.IToken;
  */
 public class POSTrainContextRenderer extends AbstractTextContextRenderer {
 
+    public POSTrainContextRenderer(boolean sort) {
+        super(sort);
+    }
+
     @Override
     protected String getTrainSample(INLPNode curNode) {
         if (null != curNode.getNodeData().getLabel()) {

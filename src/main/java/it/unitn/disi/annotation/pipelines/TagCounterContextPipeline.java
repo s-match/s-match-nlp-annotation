@@ -1,14 +1,13 @@
 package it.unitn.disi.annotation.pipelines;
 
 import it.unitn.disi.annotation.pipelines.components.TagCounter;
+import it.unitn.disi.common.pipelines.IBasePipelineComponent;
 import it.unitn.disi.nlptools.components.PipelineComponentException;
+import it.unitn.disi.smatch.data.trees.IBaseContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Reports tag counts.
@@ -18,6 +17,10 @@ import java.util.Map;
 public class TagCounterContextPipeline extends BaseContextPipeline {
 
     private static final Logger log = LoggerFactory.getLogger(TagCounterContextPipeline.class);
+
+    public TagCounterContextPipeline(List<IBasePipelineComponent<IBaseContext>> pipelineComponents) {
+        super(pipelineComponents);
+    }
 
     @Override
     public void beforeProcessing() throws PipelineComponentException {
@@ -30,8 +33,8 @@ public class TagCounterContextPipeline extends BaseContextPipeline {
         super.afterProcessing();
         Map<String, Long> tagCounts = TagCounter.getTagCounts();
         //sort by counts and print
-        MapValueComparator<String, Long> mvc = new MapValueComparator<String, Long>(tagCounts);
-        ArrayList<String> tags = new ArrayList<String>(tagCounts.keySet());
+        MapValueComparator<String, Long> mvc = new MapValueComparator<>(tagCounts);
+        ArrayList<String> tags = new ArrayList<>(tagCounts.keySet());
         Collections.sort(tags, mvc);
 
         for (String tag : tags) {
@@ -41,7 +44,7 @@ public class TagCounterContextPipeline extends BaseContextPipeline {
 
     private static class MapValueComparator<A, B extends Comparable<? super B>> implements Comparator<A> {
 
-        private Map<A, B> base;
+        private final Map<A, B> base;
 
         public MapValueComparator(Map<A, B> base) {
             this.base = base;

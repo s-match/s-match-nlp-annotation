@@ -17,8 +17,8 @@ public abstract class BaseNodeProcessingContextPipelineComponent extends BaseCon
     @SuppressWarnings("unchecked")
     public void process(IBaseContext<IBaseNode> instance) throws PipelineComponentException {
         //go DFS, processing node-by-node, keeping path-to-root as context
-        ArrayList<IBaseNode> queue = new ArrayList<IBaseNode>();
-        ArrayList<IBaseNode> pathToRoot = new ArrayList<IBaseNode>();
+        ArrayList<IBaseNode> queue = new ArrayList<>();
+        ArrayList<IBaseNode> pathToRoot = new ArrayList<>();
         queue.add(instance.getRoot());
 
         while (!queue.isEmpty()) {

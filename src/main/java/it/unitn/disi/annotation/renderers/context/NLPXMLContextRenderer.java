@@ -7,7 +7,7 @@ import it.unitn.disi.nlptools.data.ILabel;
 import it.unitn.disi.nlptools.data.IToken;
 import it.unitn.disi.smatch.data.ling.ISense;
 import it.unitn.disi.smatch.data.trees.IBaseNode;
-import it.unitn.disi.smatch.renderers.context.BaseSimpleXMLContextRenderer;
+import it.unitn.disi.smatch.renderers.context.BaseXMLContextRenderer;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -18,7 +18,7 @@ import javax.xml.transform.sax.TransformerHandler;
  *
  * @author <a rel="author" href="http://autayeu.com/">Aliaksandr Autayeu</a>
  */
-public class NLPXMLContextRenderer extends BaseSimpleXMLContextRenderer<INLPContext> implements INLPContextRenderer {
+public class NLPXMLContextRenderer extends BaseXMLContextRenderer<INLPContext> implements INLPContextRenderer {
 
     protected void renderNodeContents(IBaseNode curNode, TransformerHandler hd) throws SAXException {
         INLPNodeData curNodeData = ((INLPNode) curNode).getNodeData();

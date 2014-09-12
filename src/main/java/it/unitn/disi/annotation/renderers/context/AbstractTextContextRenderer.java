@@ -2,6 +2,7 @@ package it.unitn.disi.annotation.renderers.context;
 
 import it.unitn.disi.annotation.data.INLPContext;
 import it.unitn.disi.annotation.data.INLPNode;
+import it.unitn.disi.smatch.data.util.ProgressContainer;
 import it.unitn.disi.smatch.renderers.context.BaseFileContextRenderer;
 import it.unitn.disi.smatch.renderers.context.ContextRendererException;
 import org.slf4j.Logger;
@@ -21,28 +22,30 @@ public abstract class AbstractTextContextRenderer extends BaseFileContextRendere
     private static final Logger log = LoggerFactory.getLogger(AbstractTextContextRenderer.class);
 
     public static final String TRAIN_FILES = "Train files (*.train)";
-    private long renderedCount;
+
+    protected AbstractTextContextRenderer(boolean sort) {
+        super(sort);
+    }
 
     @Override
-    protected void process(INLPContext context, BufferedWriter out) throws IOException, ContextRendererException {
-        renderedCount = 0;
+    protected void process(INLPContext context, BufferedWriter out, ProgressContainer progressContainer) throws IOException, ContextRendererException {
         INLPNode curNode = context.getRoot();
-        processNode(curNode, out);
+        processNode(curNode, out, progressContainer);
         if (log.isInfoEnabled()) {
-            log.info("Rendered labels: " + renderedCount);
+            log.info("Rendered labels: " + progressContainer.getCounter());
         }
     }
 
-    protected void processNode(INLPNode curNode, BufferedWriter out) throws IOException {
+    protected void processNode(INLPNode curNode, BufferedWriter out, ProgressContainer progressContainer) throws IOException {
         String toWrite = getTrainSample(curNode);
         if (null != toWrite) {
             out.write(toWrite);
             out.write("\n");
-            renderedCount++;
+            progressContainer.progress();
         }
         Iterator<INLPNode> i = curNode.getChildren();
         while (i.hasNext()) {
-            processNode(i.next(), out);
+            processNode(i.next(), out, progressContainer);
         }
     }
 
