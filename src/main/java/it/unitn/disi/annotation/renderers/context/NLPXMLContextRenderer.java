@@ -5,6 +5,7 @@ import it.unitn.disi.annotation.data.INLPNode;
 import it.unitn.disi.annotation.data.INLPNodeData;
 import it.unitn.disi.nlptools.data.ILabel;
 import it.unitn.disi.nlptools.data.IToken;
+import it.unitn.disi.smatch.async.AsyncTask;
 import it.unitn.disi.smatch.data.ling.ISense;
 import it.unitn.disi.smatch.data.trees.IBaseNode;
 import it.unitn.disi.smatch.renderers.context.BaseXMLContextRenderer;
@@ -18,7 +19,23 @@ import javax.xml.transform.sax.TransformerHandler;
  *
  * @author <a rel="author" href="http://autayeu.com/">Aliaksandr Autayeu</a>
  */
-public class NLPXMLContextRenderer extends BaseXMLContextRenderer<INLPContext> implements INLPContextRenderer {
+public class NLPXMLContextRenderer extends BaseXMLContextRenderer<INLPContext, INLPNode> implements INLPContextRenderer, IAsyncNLPContextRenderer {
+
+    public NLPXMLContextRenderer() {
+        super();
+    }
+
+    public NLPXMLContextRenderer(boolean sort) {
+        super(sort);
+    }
+
+    public NLPXMLContextRenderer(String location, INLPContext context) {
+        super(location, context);
+    }
+
+    public NLPXMLContextRenderer(String location, INLPContext context, boolean sort) {
+        super(location, context, sort);
+    }
 
     protected void renderNodeContents(IBaseNode curNode, TransformerHandler hd) throws SAXException {
         INLPNodeData curNodeData = ((INLPNode) curNode).getNodeData();
@@ -57,5 +74,10 @@ public class NLPXMLContextRenderer extends BaseXMLContextRenderer<INLPContext> i
             }
             hd.endElement("", "", "label");
         }
+    }
+
+    @Override
+    public AsyncTask<Void, INLPNode> asyncRender(INLPContext context, String location) {
+        return new NLPXMLContextRenderer(location, context, sort);
     }
 }

@@ -1,20 +1,34 @@
 package it.unitn.disi.annotation.renderers.context;
 
+import it.unitn.disi.annotation.data.INLPContext;
 import it.unitn.disi.annotation.data.INLPNode;
 import it.unitn.disi.nlptools.data.ILabel;
 import it.unitn.disi.nlptools.data.IToken;
+import it.unitn.disi.smatch.async.AsyncTask;
 
 /**
  * Renders annotated context in <a href="http://ilk.uvt.nl/conll/#dataformat">CONLL-X</a> format.
  *
  * @author <a rel="author" href="http://autayeu.com/">Aliaksandr Autayeu</a>
  */
-public class CONLLXContextRenderer extends AbstractTextContextRenderer {
+public class CONLLXContextRenderer extends AbstractTextContextRenderer implements IAsyncNLPContextRenderer {
 
     public static final String TRAIN_FILES = "CONLL files (*.conll)";
 
+    public CONLLXContextRenderer() {
+        super();
+    }
+
     protected CONLLXContextRenderer(boolean sort) {
         super(sort);
+    }
+
+    public CONLLXContextRenderer(String location, INLPContext context) {
+        super(location, context);
+    }
+
+    public CONLLXContextRenderer(String location, INLPContext context, boolean sort) {
+        super(location, context, sort);
     }
 
     protected String getTrainSample(INLPNode curNode) {
@@ -54,6 +68,11 @@ public class CONLLXContextRenderer extends AbstractTextContextRenderer {
             return result.toString();
         }
         return null;
+    }
+
+    @Override
+    public AsyncTask<Void, INLPNode> asyncRender(INLPContext context, String location) {
+        return new CONLLXContextRenderer(location, context, sort);
     }
 
     public String getDescription() {
