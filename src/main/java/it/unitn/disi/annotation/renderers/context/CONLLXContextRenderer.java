@@ -32,7 +32,7 @@ public class CONLLXContextRenderer extends AbstractTextContextRenderer implement
     }
 
     protected String getTrainSample(INLPNode curNode) {
-        ILabel label = curNode.getNodeData().getLabel();
+        ILabel label = curNode.nodeData().getLabel();
         if (null != label) {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < label.getTokens().size(); i++) {

@@ -38,7 +38,7 @@ public class NLPXMLContextRenderer extends BaseXMLContextRenderer<INLPContext, I
     }
 
     protected void renderNodeContents(IBaseNode curNode, TransformerHandler hd) throws SAXException {
-        INLPNodeData curNodeData = ((INLPNode) curNode).getNodeData();
+        INLPNodeData curNodeData = ((INLPNode) curNode).nodeData();
 
         if (null != curNodeData.getLabel()) {
             ILabel label = curNodeData.getLabel();

@@ -32,7 +32,7 @@ public class TokTrainContextRenderer extends AbstractTextContextRenderer impleme
     }
 
     protected String getTrainSample(INLPNode curNode) {
-        ILabel label = curNode.getNodeData().getLabel();
+        ILabel label = curNode.nodeData().getLabel();
         if (null != label) {
             StringBuilder result = new StringBuilder();
             StringBuilder text = new StringBuilder();

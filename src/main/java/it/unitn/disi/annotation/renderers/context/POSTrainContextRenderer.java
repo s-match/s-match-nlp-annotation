@@ -30,9 +30,9 @@ public class POSTrainContextRenderer extends AbstractTextContextRenderer impleme
 
     @Override
     protected String getTrainSample(INLPNode curNode) {
-        if (null != curNode.getNodeData().getLabel()) {
+        if (null != curNode.nodeData().getLabel()) {
             StringBuilder result = new StringBuilder();
-            for (IToken token : curNode.getNodeData().getLabel().getTokens()) {
+            for (IToken token : curNode.nodeData().getLabel().getTokens()) {
                 if (null != token.getPOSTag()) {
                     result.append(token.getText().replace(' ', '_')).append("_").append(token.getPOSTag()).append(" ");
                 }

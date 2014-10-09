@@ -28,7 +28,7 @@ public class NLPContext extends BaseContext<INLPNode> implements INLPContext, IB
     @Override
     public INLPNode createRoot(String name) {
         INLPNode result = createRoot();
-        result.getNodeData().setName(name);
+        result.nodeData().setName(name);
         return result;
     }
 }

@@ -88,16 +88,16 @@ public class NLPXMLContextLoader extends BaseXMLContextLoader<INLPContext, INLPN
                         node = newRoot.createChild();
                     }
                 }
-                node.getNodeData().setId(atts.getValue("id"));
+                node.nodeData().setId(atts.getValue("id"));
                 pathToRoot.addLast(node);
                 break;
             case "label":
                 label = new Label();
                 INLPNode n = pathToRoot.getLast();
-                n.getNodeData().setLabel(label);
+                n.nodeData().setLabel(label);
                 String text = atts.getValue("text");
                 if (null == text) {
-                    text = makeUnique(n.getNodeData().getName());
+                    text = makeUnique(n.nodeData().getName());
                 } else {
                     text = makeUnique(text);
                 }
@@ -137,7 +137,7 @@ public class NLPXMLContextLoader extends BaseXMLContextLoader<INLPContext, INLPN
         super.endElement(uri, localName, qName);
         switch (localName) {
             case "name":
-                pathToRoot.getLast().getNodeData().setName(makeUnique(content.toString()));
+                pathToRoot.getLast().nodeData().setName(makeUnique(content.toString()));
                 break;
             case "formula":
                 if (null != label) {

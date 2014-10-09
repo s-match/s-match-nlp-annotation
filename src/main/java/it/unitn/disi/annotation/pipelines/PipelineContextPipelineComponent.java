@@ -33,7 +33,7 @@ public class PipelineContextPipelineComponent extends BaseContextPipelineCompone
     public void process(IBaseContext<INLPNode> instance) throws PipelineComponentException {
         //go DFS, processing node-by-node, keeping path-to-root as context
         if (null != instance.getRoot()) {
-            ProgressContainer progressContainer = new ProgressContainer(instance.getRoot().getDescendantCount() + 1, log);
+            ProgressContainer progressContainer = new ProgressContainer(instance.nodesCount(), log);
 
             ArrayList<INLPNode> queue = new ArrayList<>();
             ArrayList<IBaseNode> pathToRoot = new ArrayList<>();
@@ -49,7 +49,7 @@ public class PipelineContextPipelineComponent extends BaseContextPipelineCompone
                     ILabel currentPhrase;
                     currentPhrase = processNode(currentNode, pathToRootPhrases, progressContainer);
 
-                    List<INLPNode> children = currentNode.getChildrenList();
+                    List<INLPNode> children = currentNode.getChildren();
                     if (0 < children.size()) {
                         queue.add(0, null);
                         pathToRoot.add(currentNode);
@@ -64,9 +64,9 @@ public class PipelineContextPipelineComponent extends BaseContextPipelineCompone
     }
 
     protected ILabel processNode(INLPNode currentNode, ArrayList<ILabel> pathToRootPhrases, ProgressContainer progressContainer) {
-        ILabel label = currentNode.getNodeData().getLabel();
+        ILabel label = currentNode.nodeData().getLabel();
         if (null == label) {
-            label = new Label(currentNode.getNodeData().getName());
+            label = new Label(currentNode.nodeData().getName());
         }
         label.setContext(pathToRootPhrases);
         try {
@@ -74,7 +74,7 @@ public class PipelineContextPipelineComponent extends BaseContextPipelineCompone
         } catch (PipelineComponentException e) {
             log.error(e.getMessage(), e);
         }
-        currentNode.getNodeData().setLabel(label);
+        currentNode.nodeData().setLabel(label);
         progressContainer.progress();
         return label;
     }

@@ -28,7 +28,7 @@ public abstract class BaseNodeProcessingContextPipelineComponent extends BaseCon
             } else {
                 processNode(currentNode, pathToRoot);
 
-                List<IBaseNode> children = currentNode.getChildrenList();
+                List<IBaseNode> children = currentNode.getChildren();
                 if (0 < children.size()) {
                     queue.add(0, null);
                     pathToRoot.add(currentNode);

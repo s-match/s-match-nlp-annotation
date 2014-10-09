@@ -50,7 +50,7 @@ public abstract class AbstractTextContextRenderer extends BaseFileContextRendere
             out.write("\n");
             progress();
         }
-        Iterator<INLPNode> i = curNode.getChildren();
+        Iterator<INLPNode> i = curNode.childrenIterator();
         while (i.hasNext()) {
             processNode(i.next(), out);
         }
